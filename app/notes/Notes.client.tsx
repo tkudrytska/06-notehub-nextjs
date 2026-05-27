@@ -4,7 +4,7 @@ import css from "./Notes.module.css";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { fetchNotes } from "../../lib/api";
 import Modal from "../../components/Modal/Modal";
 import NoteList from "../../components/NoteList/NoteList";
@@ -37,10 +37,7 @@ const NotesClient = () => {
   const { data } = useQuery({
     queryKey: ["note", searchQuery, currentPage],
     queryFn: () => fetchNotes(searchQuery, currentPage),
-    placeholderData: {
-      notes: [],
-      totalPages: 0,
-    },
+    placeholderData: keepPreviousData,
   });
 
   const handlePageChange = (page: number) => {
