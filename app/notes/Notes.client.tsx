@@ -5,13 +5,13 @@ import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 import { useQuery } from "@tanstack/react-query";
-import type { FetchNotesResponse, CreateNoteData } from "../lib/api";
-import { fetchNotes } from "../lib/api";
-import Modal from "../components/Modal/Modal";
-import NoteList from "../components/NoteList/NoteList";
-import SearchBox from "../components/SearchBox/SearchBox";
-import Pagination from "../components/Pagination/Pagination";
-import NoteForm from "../components/NoteForm/NoteForm";
+import type { FetchNotesResponse, CreateNoteData } from "../../lib/api";
+import { fetchNotes } from "../../lib/api";
+import Modal from "../../components/Modal/Modal";
+import NoteList from "../../components/NoteList/NoteList";
+import SearchBox from "../../components/SearchBox/SearchBox";
+import Pagination from "../../components/Pagination/Pagination";
+import NoteForm from "../../components/NoteForm/NoteForm";
 
 const NotesClient = () => {
   const router = useRouter();
