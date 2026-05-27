@@ -8,10 +8,9 @@ import type { CreateNoteData } from "../../lib/api";
 
 interface NoteFormProps {
   onClose: () => void;
-  note: CreateNoteData;
 }
 
-const NoteForm = ({ onClose, note }: NoteFormProps) => {
+const NoteForm = ({ onClose }: NoteFormProps) => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: createNote,
@@ -40,9 +39,9 @@ const NoteForm = ({ onClose, note }: NoteFormProps) => {
   });
 
   const initialValues: CreateNoteData = {
-    title: note.title,
-    content: note.content,
-    tag: note.tag ?? "Todo",
+    title: "",
+    content: "",
+    tag: "Todo",
   };
 
   const handleSubmit = (values: CreateNoteData) => {

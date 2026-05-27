@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 import { useQuery } from "@tanstack/react-query";
-import type { FetchNotesResponse, CreateNoteData } from "../../lib/api";
 import { fetchNotes } from "../../lib/api";
 import Modal from "../../components/Modal/Modal";
 import NoteList from "../../components/NoteList/NoteList";
@@ -35,9 +34,13 @@ const NotesClient = () => {
   300
 );
 
-  const { data } = useQuery<FetchNotesResponse>({
+  const { data } = useQuery({
     queryKey: ["note", searchQuery, currentPage],
     queryFn: () => fetchNotes(searchQuery, currentPage),
+    placeholderData: {
+      notes: [],
+      totalPages: 0,
+    },
   });
 
   const handlePageChange = (page: number) => {
@@ -48,12 +51,6 @@ const NotesClient = () => {
 
   const notes = data?.notes ?? [];
   const totalPages = data?.totalPages ?? 0;
-
-  const note: CreateNoteData = {
-    title: "",
-    content: "",
-    tag: "Todo",
-  };
 
   const handleCreateNote = () => {
     setIsModalOpen(true);
@@ -80,7 +77,7 @@ const NotesClient = () => {
       </header>
       {isModalOpen && (
         <Modal onClose={closeModal}>
-          <NoteForm onClose={closeModal} note={note} />
+          <NoteForm onClose={closeModal} />
         </Modal>
       )}
       {notes.length > 0 && <NoteList notes={notes} />}
